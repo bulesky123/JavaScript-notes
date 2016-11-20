@@ -1,0 +1,138 @@
+1、String.charAt()返回字符串string中的第n个字符。
+	字符串中第一个字符的下标值是0。
+	如果参数n不在0和string.length-1之间，该方法将返回一个空字符串
+
+2、charCodeAt( ) 返回字符串中的第n个字符的Unicode编码
+
+3、concat()将把它的所有参数都转换成字符串(如果必要)
+           然后按顺序连接到字符串string的尾部，返回连接后的字符串
+4、fromCharCode（）这个静态方法提供了一种创建字符串的方式，即字符串中		的每个字符都由单独的数字 Unicode编码指定。
+       	var str = String.fromCharCode(104, 101, 108, 108, 111); 
+		创建字符串"hello"
+        	alert(str);
+       var aa=String.fromCharCode(20320,22909)//你-20320  好--22909
+5、 indexOf("要搜索的字符串");
+	从0位置开始搜索，返回第一个匹配的字符串的位置;搜索不到返回-1
+      	var str="abcdefg";
+        alert(str.indexOf("ab"));
+      	indexOf("要搜索的字符串",开始搜索的位置);
+      	var aa="abcedfghighdckkccccc";
+        alert(aa.indexOf("c",4));//从下标是4的位置开始搜索，返回第一		个匹配的字符串的位置;搜索不到返回-1
+
+6、 lastIndexOf("要搜索的字符串");//最后一个位置开始搜索，返回第一个匹		配的字符串的位置;搜索不到返回-1
+      		var str="abcdeafg";
+        	alert(str.lastIndexOf("a"));
+      		lastIndexOf("要搜索的字符串",开始搜索的位置);
+      		var aa="abcedfghighdckkcbfeds";
+       		 alert(aa.lastIndexOf("c",4));//从下标是4的位置往		前搜索，返回第一个匹配的字符串的位置;搜索不到返回-1
+
+7、 localeCompare("要比较的字符串");//两个字符如果相等返回0,如果大于返		回正数,小于返回负数
+   	var str="帅哥";
+        alert(str.localeCompare("帅哥"));//字符串相等返回0
+        alert(str.localeCompare("阿呀"));//字符串相等返回正数
+        alert(str.localeCompare("责任"));//字符串相等返回负数
+
+8、 match(regexp)方法:返回第一个匹配的字符串到一个新数组中
+    match(regexp/g)方法:正则表达式加/g，返回所匹配的字符串到一个新数组	中
+        var src="azcaFAJAC";
+        document.write(src.match("A")+"<br>");//如果math参数是字符串	，会自动转换为regexp返回第一个匹配的字符串，放置到一个长度为1	的数组中
+        var src = "azcafAJAC";
+        var re = /[a-c]/;//正则表达式:匹配a-c
+        var result = src.match(re);//返回一个新数组，由于不带正则表达	式不带/g，返回长度为1的数组，放置第一个匹配的字符串
+        document.write(result[0] + "<br/>");
+
+        //正则表达式带/g返回所有，匹配正则表达式的字符串，存储到一个数	组中
+        var reg = /[a-c]/g;
+        result = src.match(reg);
+
+        //for循环遍历数组
+        for (var index = 0; index < result.length; index++)
+        {
+            document.write ("下标 " + index + ": " +  result	[index]);
+            document.write("<br />");
+        }
+
+9、replace("被替换的字符串","替换成的字符串")方法:替换第一个匹配的字符		串到一个新字符串
+        replace("被替换的字符串","替换成的字符串")方法:返回一个新字符		串，替换所有匹配正则表达式的字符串
+        var src="azcaFAJAC";
+        var new1=src.replace("A","B");//返回替换后的新字符串
+        document.write(new1+"<br>");
+        src = "azcafAJAC";
+        var re = /[a-c]/;//正则表达式:匹配a-c
+        var result = src.replace(re,"B");//返回替换后新字符串，这里没		有g，所有只替换第一个匹配正则表达式的字符串
+        document.write(result + "<br/>");
+
+        正则表达式带g返回所有，匹配正则表达式的字符串，存储到一个数组中
+        var reg = /[a-c]/g;
+        result = src.replace(reg,"B"); //返回替换后的字符串,这里带g，		所以替换所有匹配正则表达式的字符串
+        document.write(result);
+
+10、slice(开始截取的位置[,结束位置])方法:可提取字符串的某个部分，并以	新的字符串返回被提取的部分；否则返回空字符串
+        //从开始截取位置开始，到结束位置之前，不包括结束位置的字符
+        var str="Hello happy world!";
+        var rs=str.slice(6);//一个参数，从下标6开始截取并返回新字符串
+        alert(rs);
+        var a="Hello happy,world!";
+        var as= a.slice(6,11);//截取到第位置11之前，不包括11
+        alert(as);
+        //参数也可以为负数，slice(负数+字符串长度[,负数+字符串长度])
+        var b="Hello happy,world!";
+        alert("b对象的长度:"+b.length);
+
+        var bs= b.slice(-6,-1);//相当于slice(12,17);
+        alert(bs);
+
+11、slipt("分隔符",限定)方法:按指定分隔符，将字符串转化为数组
+        //slipt(regexp,限定)方法:按照正则表达式，讲将字符串转化为数组
+        var str="语文|数学|历史|地理|文化";
+        document.write(str+"<br>");
+        document.write("无限定:<br>");
+        var new1=str.split("|");
+        for(var i in new1){
+            document.write(new1[i]+"<br>");
+        }
+        document.write("有限定:<br>");
+        var new2=str.split("|",3);//返回数组大小为3
+        for(var i in new2){
+            document.write(new2[i]+"<br>");
+        }
+        //正则表达式
+        document.write("正则表达式:<br>");
+        var text = "hello <b>world</b>";
+        document.write(text+"<br>");
+        var t=text.split(/(<[^>]*>)/);  // 返回 ["hello","<b>","world","</b>",""]
+        document.write(t+"<br>")
+
+
+12、stringObj.search(regExp):返回与正则表达式查找内容匹配的第一个字符串的位置。
+	注意：search方法指明是否存在相应的匹配。热锅找到一个匹配，search方法可将返回一个整数值，指明这个匹配距离字符串开始位置的偏移位置，如果没有找到匹配，则返回-1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

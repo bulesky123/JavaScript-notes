@@ -1,0 +1,86 @@
+JavaScript的DOM操作(节点操作)
+1、创建节点
+createElement()
+var node = document.createElement(“div”);
+没什么可说的，创建一个元素节点，但注意，这个节点不会被自动添加到文档（document）里。
+
+2、创建文本节点
+createTextNode()
+var value = document.createTextNode(“text”);
+创建一个文本节点，常用来往元素节点里添加内容，也不会自动添加到文档里。
+很多人知道innerHTML，不知道这个方法，这个添加的是静态文本，如果插入的内容不带HTML格式，用createTextNode比innerHTML安全，而innerText又有浏览器不兼容的问题，因此用createTextNode很好使。
+
+3、插入节点到最后
+appendChild()
+node.appendChild(value);
+将节点插入到最后，上面两个创建的节点不会自动添加到文档里，所以就要使appendChild来插入了。
+如果是新的节点是插入到最后，而如果是已经存在的节点则是移动到最后，这点很多人注意不到，理解了这点，再和下面的方法结合，可以方便的移动操作节点。
+
+4、插入节点到目标节点的前面
+insertBefore()
+var node = document.createElement(“div”);
+var _p = document.createElement(“p”);
+var _span = document.createElement(“span”);
+node.appendChild(_p);
+node.insertBefore(_span, _p);
+<span>节点在<p>节点前面插入，其中第二个参数是可选，如果第二个参数不写，将默认添加到文档的最后，相当于appendChild。
+同样，appendChild和insertBefore，如果是已存在节点，他们都会自动先删除原节点，然后移动到你指定的地方。
+将节点移动到最前面的技巧：
+if (node.parentNode.firstChild) node.parentNode.insertBefore(node, node.parentNode.firstChild);
+else node.parentNode.appendChild(node);
+
+5、复制节点
+cloneNode(boolean)
+node.cloneNode(true);
+node.cloneNode(false);
+复制上面的div节点，参数true，复制整个节点和里面的内容；false，只复制节点不要里面的内容，复制后的新节点，也不会被自动插入到文档，需要用到3和4的方法去插入。
+
+6、删除节点
+removeChild()
+node.removeChild(_p);
+把上面的<p>节点从<div>里删除。不过一般情况下，不知道要删除的节点的父节点是什么，因此一般这么使：node.parentNode.removeChild(node);
+
+7、替换节点
+repalceChild(newNode, oldNode)
+node.repalceChild(_p, _span);
+把上面的<span>节点替换成<p>节点，注意无论是<span>还是<p>，都必须是<div>的子节点，或是一个新的节点。
+
+8、设置节点属性
+setAttribute()
+node.setAttribute("title","abc");
+不解释了，很容易明白。就说一句，用这个方法设置节点属性兼容好，但class属性不能这么设置。
+
+9、获取节点属性
+getAttribute()
+node.getAttribute("title");
+同8，获取节点属性。
+
+10、判断元素是否有子节点
+hasChildNodes
+node.hasChildNodes;
+返回boolean类型，因此将新节点插入到最前面的技巧：
+var node = document.createElement(“div”);
+var newNode = document.createElement(“p”);
+if (node.hasChildNodes) node.insertBefore(newNode, node.firstChild);
+else node.appendChild(node);
+
+
+最后是DOM的属性：
+
+nodeName - 节点的名字；
+
+nodeType - 返回一个整数，代表这个节点的类型，1-元素节点，2-属性节点，3-文本节点；
+
+nodeValue - 返回一个字符串，这个节点的值；
+
+childNodes - 返回一个数组，数组由元素节点的子节点构成；
+
+firstChild（对低版本好使） - 返回第一个子节点；(firstElementChild：对高版本好使)
+
+lastChild - 返回最后一个子节点；（lastElementChild）
+
+nextSibling - 返回目标节点的下一个兄弟节点，如果目标节点后面没有同属于一个父节点的节点，返回null；（nextElementSibling）
+
+previousSibling - 返回目标节点的前一个兄弟节点，如果目标节点前面没有同属于一个父节点的节点，返回null；（previousElementSibling）
+
+parentNode - 返回的节点永远是一个元素节点，因为只有元素节点才有可能有子节点，document节点将返回null；

@@ -1,0 +1,111 @@
+1、定义：DOM（文档对象模型）是一种将XML或HTML文档解析成树形节点的方法。（DOM树）DOM树中的每一个节点都是一个对象
+
+2、节点的属性：
+——nodeType  节点类型有12种，每种类型分别用一个整数表示。
+   		——1（元素节点）2（属性节点）3（文本节点）
+——nodeName  节点的名字，文本节点——#text
+——nodeValue  节点的节点值 document——null
+
+3、documentElement  
+ —>document.documentElement     131126199010150628
+   //<html>
+ console.dir(document.documentElement) //html
+ console.dir(document.body)            //body
+4、子节点
+
+——hasChildNodes          判断是否存在子节点
+——childNodes             字节点
+     ——document.documentElement.childNodes[0];
+     ——><head>
+
+——parentNode              父节点
+
+5、属性
+——hasAttributes()         检查某元素书否存在属性
+——getAttribute()          获取相关属性
+——setAttribute()           设置相关属性
+
+6、访问标签中的内容
+——textContent             除IE外支持
+——innerText               IE支持       
+（注意：都只是访问里面的文本）
+
+——innerHTML               不只是文本所有包含的标签都会被返回
+
+
+7、document.getElementsByTagName(*)   返回所有节点
+
+
+8、兄弟节点、body元素及首尾节点
+
+——nextSibling       返回目标节点的下一个兄弟节点，如果目标节点后面没有同属于一个父节点的节点，返回null；
+
+——previousSibling    返回目标节点的前一个兄弟节点，如果目标节点前面没有同属于一个父节点的节点，返回null；
+
+——firstChild         返回第一个子节点；
+
+——lastChild          返回最后一个子节点；
+
+9、修改样式
+
+——div1.style.fontWeight="bold"    CSS中有"-"的直接去掉，
+单词大写即可
+
+10、新建节点
+——createElement()        新建元素节点
+
+——createTextNode()       新建文本节点
+
+——appendChild()          将新建的节点添加到什么后面
+
+11、拷贝（克隆）节点
+——cloneNode()    
+        ——true      深拷贝   （将所有节点都拷贝包括孙子）
+        ——false     浅拷贝   （只拷贝当前的节点（相当于值创建一个该节点））
+
+12、insertBefore(节点名)        将指定节点插入到某节点的前面   
+
+window.onload=function(){
+			var div1=document.body.childNodes[1];
+			var p=document.createElement("p");
+			var text=document.createTextNode("hahhah")
+			p.appendChild(text);
+			document.body.insertBefore(p,div1);
+		}
+ 
+
+13、移除节点：removeChild()   移除一个节点的同时将另一个节点放在该位置
+
+14、只是用于HTML的DOM对象:
+
+Window对象包含属性：document、location、navigator、screen、history、frames
+
+Document根节点包含子节点：forms、location、anchors、images、links
+
+
+document.images——当前页面中所有图片的集合
+相当于document.getElementsByTagName("img")
+
+15、document.applets—相当于
+document.getElementByTagName("applets")
+
+16、document.links——包含页面中所有含href属性的a 标签
+
+
+17、document.anchors——包含所有带Name属性的连接(<a name=></a>)    
+18、document.forms——<form>标签的列表
+
+例如：第一个form元素
+	document.forms[0]
+
+document.forms[0].elements[0]
+
+19、document.cookie
+
+20、document.title——修改页面在浏览器窗口中所显示的标题，实际上并没有修改<title></title>里的内容
+
+21、document.referrer——记录的是我们之前访问过的页面RUL
+
+22、document.domain——对当前所载入页面的域名进行访问
+
+23、window.location===document.location     //true 

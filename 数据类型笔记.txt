@@ -1,0 +1,64 @@
+1、除：空字符“” null undefined 数字0 数字NaN  布尔值false 这几个值之外都会被转化为false  其他的被转化为true（注意包括数字0 “false”）
+
+2、操作符的优先级：()>！>&&>||
+
+3、NaN==NaN   //false
+
+4、undefined与null
+——undefined：（a）使用一个不存在的变量时；undefined
+                (b)声明一个变量没有对其赋值时，调用不会出错，js会自动对其赋值undefined
+
+——null：    不能通过js来自动赋值
+
+var i=1+undefined;
+i;     //NaN
+
+
+var i=1+null ;
+i;    //1
+
+1*undefined    //NaN
+
+1*null         //0
+
+!!undefined    //false
+
+!!null         //false
+
+""+null        //"null"
+
+""+undefined   //"undefined"
+
+5、数组：存储数据的列表
+
+6、while循环：while（条件）{
+	语句；
+	}
+
+7、do whlie循环：do{
+	语句;
+	}while(条件)   //至少执行一次
+
+8、switch语句  swicth(变量){
+		case 值：
+		语句;
+		break;
+		.......
+		default:
+		语句;
+	}
+
+
+break  中断当前循环
+
+continue 
+
+label(相当于书签) 针对于break而来的
+
+for(var i=1;i<=3;i++){
+	for(var j=1;j<=3;j++){
+
+
+}
+console.log()
+}

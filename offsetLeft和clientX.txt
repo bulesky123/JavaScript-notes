@@ -1,0 +1,21 @@
+offsetLeft:是子元素相对于父元素的距离。
+
+offsetWidth:元素的实际宽度，不包括滚动条。
+
+clientX:鼠标相对于浏览器边框的X坐标
+
+offsetLeft 与style.left的对比：
+
+1）style.left 返回的是字符串 例如30px、offsetLeft返回的是数值30
+
+2)style.left 只能取到行内的left值（html代码中<div style="left:30px;">）而offsetLeft 能取到css代码中的值
+
+3）style.left是可读写的，offsetLeft是只读的，所以要改变div的位置，只能修改style.left
+
+4)style.left的值需要事先定义，否则取到的值为空
+
+
+Math.ceil()  向上取整  比如3.01 取为4   -9.8 取为-9
+
+Math.floor() 向下取整  比如3.01 取为3   -9.8取为-10
+

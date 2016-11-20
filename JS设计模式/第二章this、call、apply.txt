@@ -1,0 +1,94 @@
+1、this 的四种指向：
+
+a、作为对象的方法调用：
+例如：var obj={
+	      a:1,
+              getA:function(){
+		alert(this===obj)    //输出true
+		alert(this.a)        //输出：1
+		}
+	};
+obj.getA();
+
+b、作为普通函数调用：
+——当函数不作为对象属性被调用时，也就是我们常说的普通函数方式，此时的this指向全局对象，全局对象是window
+
+例如：window.name="globalName";
+      var getName=function(){
+	return this.name;
+       };
+       console.log(getName());   //输出globalName
+
+或者：
+
+     window.name="globalName";
+     var myObject={
+		name:"seven",
+       		getName:function(){
+		return this.name;
+		}
+	};
+	var getName=myObject.getName;
+        console.log(getName());     //输出 globalName
+
+有时候div节点的时间内部有一个局部的callback方法，callback被当作为普通函数调用时，callback内部的this指向了window，但我们往往想让它指向该div节点，例如：
+
+
+	window.id="window";
+		document.getElementById              ("div1").onclick=function(){
+			alert(this.id); //输出：div1   
+			var callback=function(){
+			alert(this.id);  //输出window
+			}
+			callback();
+		}
+
+解决方法：
+
+
+window.id="window";
+		document.getElementById              ("div1").onclick=function(){
+			var _this=this; //保存div的引用  
+			var callback=function(){
+			alert(this.id);  //输出div
+			}
+			callback();
+		}
+
+
+3、构造器的调用：用new运算符来新建对象
+
+注意：在用new调用构造器时，如果构造器显示的返回了一个object类型的对象，那么此次运算结果最终会返回这个对象，而不是我们之前期待的this
+
+例如：var MyClass=function(){
+	this.name="seven";
+	return{       //显示的返回一个对象
+		name:"anne"
+	}
+}
+	var obj=new MyClass();
+	alert(obj.name);   //输出：name
+
+如果不显式的返回任何数据，或者返回的是一个非对象类型的数据，就不会造成上面这样的。
+
+例如：var MyClass=function(){
+	this.name="seven";
+	return "anna";
+       }
+	var obj=new MyCalss();
+	alert(obj.name);    //输出：seven
+
+
+4、Function.prototype.call和Function.prototype.apply调用;
+
+例如：var obj1={
+	name:"seven",
+	getName=function(){
+	return this.name;
+	}
+}
+      var obj2={
+	name="anne"
+};
+     console.log(obj1.getName());   //输出：seven
+     console.log(obj1.getName.call(obj2));  //输出 anne

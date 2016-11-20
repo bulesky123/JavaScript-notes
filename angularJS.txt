@@ -1,0 +1,30 @@
+ng-app=""
+
+ng-mode=""
+
+ng-bind=""
+
+{{}}
+
+ng-clock 
+
+ngAnimate  
+
+
+一共还有26天  自由支配的时间还有20天  
+
+1、移动端项目还需要三天 
+
+2、jQuery 复习至少还要三天
+
+3、js复习至少还要三天
+
+4、css复习+各种框架的复习seajs/requireJS/angularJS（一天）
+
+5、Bootstrap还要两天
+
+6、面试题+less+PHP+Mysql（8天）
+
+共计20天
+
+

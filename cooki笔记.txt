@@ -1,0 +1,51 @@
+1、cookie：
+	Cookie是网站向客户端主机C:\Documents and Settings\Administrator\Local Settings\Temporary Internet Files下创建的一个文本文件，里面存储网站相关信息。用户再次访问此网站的时候服务器会读取这个Cookie文件，来获取相关信息
+
+2、用Firefox来测试cookie
+
+3、cookie的特征：
+ ——同一个网站中的所有页面共享一套cookie 以域名为单位（不同的域名     cookie不同）
+ ——数量、大小有限4K—10K  一般是50条
+ ——过期时间
+
+
+4.存储cookie：document.cookie=""   
+
+例如：document.cookie="user=blue";
+      document.cookie="passward=123456";  //两次并不会覆盖
+
+5、指定cookie的过期时间  
+		var oDate=new Date();
+                oDate.setDate(oDate.getDate()+14);//过期时间14天
+                document.cookie="user=blue;expires="+oDate;
+
+
+6、设置cookie封装函数
+
+function setCookie(name,value,iDate){
+	var oDate=new Date();
+	oDate.setDate(oDate.getDate()+iDate);
+	document.cookie=name+"="+value+";expires="+oDate;
+}
+
+
+7、读取cookie封装的函数
+在浏览器中cookie是这样储存的：username=zhoufei; password=1234; a=2; 
+以分号和空格隔开的
+
+function getCookie(name){
+	var arr=document.cookie.split("; ");
+	for(var i=0;i<arr.length;i++){
+	var arr2=arr[i].split("=");
+	if(arr2[0]==name){
+	return arr2[1];
+	}
+    }
+	return "";
+  }
+
+7.移除cookie封装函数
+
+function removeCookie(name){
+	setCookie(name, 1, -1);
+    }

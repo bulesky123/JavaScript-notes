@@ -1,0 +1,139 @@
+为啥出了个闭包这个东西，原因就是你调用的那个函数是另一个函数的返回值,当外部调用时，会沿着这个返回值的函数作用域链条来找其内部相关变量的。
+
+1、什么是闭包？
+	答：（a）函数嵌套函数
+		function a(){
+			function b(){
+			}
+		}
+		
+            （b）内部函数可以引用外部函数的参数和变量，参数不会被垃圾回收机制收回
+		function aa(a){
+			var b=5;
+			function bb(){
+			    alert(a);
+			    alert(b);
+			}
+		}
+        注意: 此处的变量 a b 都不会被垃圾回收机制收回的，因为在bb()函数里还会引用到它们了。
+
+	js中的垃圾回收机制：
+
+
+2、闭包有什么好处？引用在哪里？
+	答：（a）希望一个变量长期驻扎在内存中
+            （b）避免全局变量的污染
+	例如1:function aa(){
+		var a=1;
+		return function(){
+			a++:
+			alert(a);
+			}
+		}
+		var b=aa();
+		b();  //2
+		b();  //3
+            可以改写成这样的写法，先自调(模块化代码)
+	  例如2: var aa=(function(){
+		var a=1;
+  		return function(){
+			a++;
+			alert(a);
+			}
+		})()
+		aa();  //2
+		aa();  //3
+
+ 	   例如3:var aa=(function(){
+			var a =1;
+			function bb(){
+			a++;
+			alert(a);
+		      }
+			function cc(){
+			a++;
+			alert(a);
+		}
+			return {
+				b:bb;
+				c:cc;
+				}
+		})()
+		aa.b();  //2
+		aa.c();  //3
+			
+            例如4:window.onload=function(){
+		     var aLi=document.getElementById("li");
+                     for(var i=0;i<aLi.length;i++){
+                              aLi[i].onclick=function(){
+                                      alert(i);
+                                 }
+                               }
+                           }
+			注意：此时点击每个li都会弹出的是3，原因是点击事件还没发生时，循环已经结束了，然而循环结束后的i=3，故
+点击每个li都会弹出3
+
+
+现在用闭包来解决1：
+
+                 window.onload=function(){
+		     var aLi=document.getElementById("li");
+                     for(var i=0;i<aLi.length;i++){
+                              (function(i){
+				aLi[i].onclick=function(){
+                                      alert(i);
+                                     }
+  				})(i)
+                              }
+                           }
+
+现在用闭包来解决2：
+                  window.onload=function(){
+		     var aLi=document.getElementById("li");
+                     for(var i=0;i<aLi.length;i++){
+                             aLi[i].onclick=(function(i){
+                                 return function(){
+                                    alert(i);
+                                       }
+                                  })(i)
+                               }
+                           }
+	       
+		（c）私有成员的存在
+	
+
+
+ 
+3、闭包需要注意的地方？
+     答：IE下会引发内存泄漏问题。
+
+	window.onload=function(){
+		var oDiv=document.getElementById("div1");
+		oDiv.onclick=function(){
+			alert(oDiv.id);
+		}
+	}
+	注意：在IE下会发生内存泄漏 ，也就是说在浏览器关闭之前变量都会存在。
+
+
+解决方法1：
+
+  		window.onload=function(){
+		  var oDiv=document.getElementById("div1");
+		  oDiv.onclick=function(){
+			alert(oDiv.id);
+		}
+		window.onunload=function(){
+			oDiv.onclick=null;
+		}
+	}
+
+解决方法2：
+		window.onload=function(){
+		  var oDiv=document.getElementById("div1");
+		  var id=oDiv.id;
+		  oDiv.onclick=function(){
+			alert(id);
+			}
+			oDiv=null;
+		}

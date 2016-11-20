@@ -1,0 +1,140 @@
+1、Camel：第一个单词第一个字母小写，其他开头字母大写
+
+2、帕斯卡Pascal命名法:第一个单词第一个字母是大写的，接下来的每个单词第一个字母都以大写字符开头
+
+
+3、匈牙利命名法:在以 Pascal 标记法命名的变量前附加一个小写字母（或小写字母序列），说明该变量的类型
+
+局部变量：在函数内定义变量var,局部函数调用时创建，函数调用后马上就销毁。
+全局变量：（不加var 定义的都是全局变量）
+
+
+数据类型：
+——基本数据类型
+	——储存的是值
+	——var x,y,
+	——x=10;
+	——y=10;
+	——console.log(x==y); //true
+
+——对象数据类型
+	——储存的是内存的首地址
+	——var x,y,
+	——x=[1,2,3];
+	——y=[1,2,3];
+	——console.log(x==y); //false
+
+	——var x,y,
+	——x=[1,2,3];
+	——var a=x
+	——console.log(x==a); //true
+
+
+4、变量和对象的区别：
+
+对象为什么能比较相同：因为它储存的是首地址，首地址就是一个16进制的数字，因而可以比较大小。
+
+
+typeof  类型测试：
+
+js有两个空：
+——undefined  变量为空
+——null       对象为空
+
+undefined数据类型，只有undefined一个值
+
+null数据类型是object   
+
+dom对象的根节点是window,而自定义对象的根节点是object
+
+console是浏览器控制台里的对象，IE6、7里没有。
+
+5、js执行机制：
+
+先预编译：预编译执行的操作是，将所有的var的变量创建赋值为undefined（带function的创建出来）
+
+再执行
+
+
+6、输出表达式的值：
+——1、alert();弹出一个带确定的对话框
+——2、var x=new String("hhshdfsio");  console.dir(x);
+——3、console对象console.log（） 输出表达式的值或DOM标记
+——4、console.dir()      输出一个DOM对象结构
+——5、document.write()   document代表当前整篇html文档
+
+
+
+7、浏览器解析顺序：
+
+1、创建window对象 
+2、然后创建document对象 
+3、再创建标记所对应的DOM对象 
+4、在此过程中有脚本执行脚本
+
+document.write() 会新建一个文档流，如果是在window.onload=function(){}里添加document.write() 那么就会先把当前文档所有内容清空，新开一个文档
+
+++在变量前，先给变量自己加1,然后再做其他运算。
+++在变量后面，先做其他运算，然后再自己加1。
+实例一、
+
+var  x,y;			
+x=10;
+y=++x;
+console.log(x++);      //x=11
+console.log(++x);      //x=12
+实例二、
+
+var x ,y;
+x=10;
+y=x++-7;
+console.log(x);  //11
+console.log(y); //3
+实例三
+
+var x,y,z;
+x=undefined;
+y=null;
+z=x==y;
+console.log(z)  //true
+
+prompt()  里面的是字符串类型
+
+实例四、
+
+var a=["a","b","c"];
+var b=["a","b","c"];
+console.log(a==b);  //false;
+console.log(a===b); //false;   ===  先比较数据类型是是否相等，在比较值是否相等
+var c=a;
+console.log(c==a);  //true;
+console.log(c===a)  //true;
+
+比较运算和逻辑运算  最终的结果要么是true 要么是false
+
+算术运算>比较运算>逻辑运算     (优先级)
+
+console.log(0&&9)  //  0
+console.log(9&&0)  //  0
+console.log(3&&9)  //  9
+console.log(9&&3)  //  3 
+
+
+
+console.log(0||9);  //9
+console.log(9||0)   //9
+console.log(3||9)   //3
+console.log(9||3)   //9
+
+正常写  23      十进制
+        023     八进制
+        0X23    十六进制
+
+
+
+
+
+
+
+
+

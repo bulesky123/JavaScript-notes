@@ -1,0 +1,88 @@
+1、多态：不同的对象通过调用相同的方法，其实现不同的功能。
+
+2、Javascript中原型的继承：
+——原型编程的基本规则
+————1、所有的数据都是对象。
+
+————2、得到一个对象，不是通过实例化类，而是通过一个对象作为原型并克隆它
+
+————3、对象会记住它的原型
+
+————4、如果对象无法相应某个请求，它会把这个请求委托它自己的原型。
+
+分析：1、所有的数据都是对象：根对象：Object.prototype对象
+                            Object.prototype对象是一个空对象
+
+例如：var obj1=new Object();
+      var obj2={};
+   console.log(Object.gerPrototypeOf(obj1)===Object.prototype)
+    //true
+   console.log(Object.gerPrototypeOf(obj2)===Object.prototype)
+   //true
+
+      2、得到一个对象，不是通过实例化类，而是通过一个对象作为原型并克隆它（一般通过var obj1=new object()或者 var obj2={}）
+
+      3、对象会记住它的原型
+      ——对象的__proto__属性默认会指向它的构造器的原型对象
+例如：var a=new Object();
+      console.log(a.__prototype__===Object.prototype);
+      //true
+
+      __proto__就相当于联系对象构造器的原型的纽带，对象就是通过它来记住它构造器的原型
+
+      4、如果对象无法响应某个请求，它会把请求委托给他的构造器的原型
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

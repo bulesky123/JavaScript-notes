@@ -1,0 +1,92 @@
+window 对象的属性：
+
+innerHeight
+
+innerWidth
+
+length
+
+方法：
+window.alert():没有返回值，返回值为undefined
+
+window.confirm()带确定按钮的对话框，确定返回：true 取消：false
+
+window.prompt("提示信息","默认值")
+
+window.open()
+
+window.print() 打印当前页面的内容
+
+window.close() 
+
+window.resizeTo()
+
+window.resizeBy()
+
+window.srcollBy()
+
+window.scrollTo()
+
+
+
+window.setTimeout() //在指定的毫秒数后调用函数或计算表达式
+
+window.setInterval()//按照指定的周期（以毫秒计）来调用函数或计算表达式
+
+window.clearInterval()//取消由 setInterval() 设置的 timeout
+
+window.clearTimeout()//按照指定的周期（以毫秒计）来调用函数或计算表达式
+
+setTimeout("text()",2000);//此时的函数为全局函数
+function text(){alert("hhaha")};
+setTimeout("text()",2000)//必须为全局函数
+setTimeout(text,2000)  //都行
+
+
+setTimeout(text,2000);    //此时的函数为局部函数
+
+window.onload=function(){
+	function text(){alert("hha")};
+	setTimeout(text,2000);
+}
+
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+www.css88.com
+
+navigator.cookieEnabled 返回指明浏览器中是否启用 cookie 的布尔值
+navigator.userAgent 返回由客户机发送服务器的 user-agent 头部的值
+可以用它来判断是什么系统，什么浏览器：用 字符串的math()    search() 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

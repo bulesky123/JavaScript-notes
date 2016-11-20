@@ -1,0 +1,129 @@
+1、js用 style:修改的是行间样式，不能修改CSS里的样式。
+
+取非行间样式：oDiv.currentStyle.width(仅IE)
+              getComputedStyle(oDiv,false).width; 
+             （仅chrome、   Firefox）第二个参数任意值都行
+兼容写法：
+   function getStyel(obj,name){
+      if(obj.currentStyle){
+            return obj.currentStyle[name];
+       }else{
+            return getComputedStyle(obj,false)[name];
+     }
+  }
+注意：不能取复合样式：background 得用backgroundColor
+
+2、样式优先级：
+ 
+————*<标签<class<ID<行间样式
+
+3、如果在行间给出了style了，再去修改className就不会起作用
+
+4、window.onload()  当页面加载完成后执行
+
+5、Javascript的组成：
+——   ECMAScript:解释器、翻译      （几乎没有兼容性问题）
+——   DOM（document Object Model）HTML    document  （有一些操作不兼容）
+——   BOM（Browser Object Model） 浏览器   window    （没有兼容问题，（完全不兼容））
+
+
+6、NaN  属于数值型； alert(NaN==NaN)   输出false
+
+7、isNaN() 检测一个数是不是非数值  true 和false
+
+8、闭包：子函数可以用父函数的局部变量
+
+9、switch(变量)
+{
+	case 值1：
+               语句1
+                break;
+        case 值2：
+               语句2
+                break;
+          ........
+          default:
+               语句n
+}
+10、break与continue
+——break是整个循环中断了
+——continue是本次循环中断了
+
+
+11、在js中非0数字都默认为真的（true）而（0）是假的（false）
+    非空字符串是真的（true）空字符串（false）
+    非空对象是真的（true）空对象是假的（false）
+    undefined是假的（false）
+
+12、arguments           可变参  arguments其实是一个数组    
+
+例如：function sum(){
+	var result=0;
+        for(var i=0;i<arguments.length;i++){
+		result+=arguments[i];
+
+		}
+                   return result;
+
+	}
+	alert(sum(34,23,12))
+13、css()函数
+   css（oDiv,"width"）    获取width样式 
+   css(oDiv,"width",200)  设置width样式
+
+14、数组的添加：
+——push()  往数组末尾添加元素
+——pop()   在数组尾部删除元素
+——shift() 从数组头部删除元素
+——unshift()从数组头部添加元素
+
+15、插入、删除
+
+——splice(起点、长度)  例如：arr.splice(2,3);  从位置2开始，删除                        3个元素
+——splice(起点，长度，元素、、、、) 插入元素
+     例如：arr.splice(2,0,"a","b","c")
+——splice(2,2,"a","c")       相当于替换
+
+——contact（数组）     ——连接两个数组
+
+——join（分隔符）——用分隔符、组合数组元素、生成字符串
+
+——sort（）      ——排序 
+
+例如：var arr=[12,8,99,112];
+       arr.sort(function(n1,n2){
+         return n1-n2;
+        })
+      alert(arr);
+
+
+1、offsetLeft——获取物体的上边距
+2、offsetTop——获取物体的上边距
+
+Infinity   表示最大值，typeof Infinity  ——>Number
+
+任何数除0都为Infinity   ；例如：6/0——>Infinity
+Infinity与其他任何数作任何运算都是Infinity
+并且-Infinity+Infinity——>NaN
+
+NaN——>属于数字，只不过是一种特殊的数字
+
+注意：函数域（局部变量）始终优先于全局域（全局变量）:局部变量会覆盖掉所有与它同名的全局变量
+
+数组与对象的区别：
+ 
+数组： 元素                            对象：    属性
+
+索引型数组/枚举型数组（数字为键值  关联型数组/哈希表（字符串为键值）
+
+
+this——>指的是当前的对象
+
+ do{
+
+    }while(条件)
+
+console.dir() 打印对象的结构
+
+NaN===NaN   //false
+isNaN()     //判断是否为非数值

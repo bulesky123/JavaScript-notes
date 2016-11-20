@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>快速排序法</title>
+	<script type="text/javascript">
+	function quickSort(arr){
+		if(arr.length<=1){
+			return arr;
+		}
+		var num=Math.floor(arr.length/2);
+		var numValue=arr.splice(num,1);
+		var left=[];
+		var right=[];
+		for(var i=0;i<arr.length;i++){
+			if(arr[i]<numValue){
+				left.push(arr[i]);
+			}else{
+				right.push(arr[i]);
+			}
+		}
+		return quickSort(left).concat([numValue],quickSort(right));
+		//concat()字符串连接函数：用于连接两个或多个数组，以逗号隔开
+	}
+	alert(quickSort([6,78,34,90,3,2,56,6]));
+
+	//从小到大排序
+	function sort(arr){
+ 		for(var i=0;i<arr.length-1;i++){
+ 			for(var j=0;j<arr.length-i-1;j++){
+ 				if(arr[j]>arr[j+1]){
+ 					var hand=arr[j];
+ 					arr[j]=arr[j+1];
+ 					arr[j+1]=hand;
+ 				}
+ 			}
+ 		}
+ 		return arr;
+	}
+	//alert(sort([0,4,72,74,1,24,8]))
+	
+	function sort(arr){
+		for(var i=0;i<arr.length-1;i++){
+			for(var j=0;j<arr.length-i-1;j++){
+				if(arr[j]>arr[j+1]){
+					var num=arr[j];
+					arr[j]=arr[j+1];
+					arr[j+1]=num;
+				}
+			}
+		}
+		return arr;
+	}
+
+	//请给Array本地对象增加一个原型方法，它用于删除数组条目中重复的条目(可能有多个)，返回值是一个包含被删除的重复条目的新数组。
+	Array.prototype.distinct = function() {
+    var ret = [];
+    for (var i = 0; i < this.length; i++)
+    {
+        for (var j = i+1; j < this.length;) {   
+            if (this[i] === this[j]) {
+                ret.push(this.splice(j, 1)[0]);
+            } else {
+                j++;
+            }
+        }
+     }
+     return ret;
+}
+
+	//alert(['a','b','c','d','b','a','e'].distinct());
+</script>
+</head>
+<body>
+	
+</body>
+</html>

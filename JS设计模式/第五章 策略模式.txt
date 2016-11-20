@@ -1,0 +1,126 @@
+策略模式：定义一系列的算法，把它们一个个的封装起来，并且是它们可以相互替换。
+
+策略模式的目的：将算法的的使用与算法的的实现分离开来。
+
+<script type="text/javascript">
+		var strategies={
+			"S":function(salary){
+				return salary*4;
+			},
+			"A":function(salary){
+				return salary*3;
+			},
+			"B":function(salary){
+				return salary*2;
+			}
+		}
+		var calculatebonus=function(level,salary){
+			return strategies[level](salary);
+		}
+		console.log(calculatebonus("S",20000));
+		console.log(calculatebonus("A",10000));
+</script>
+
+
+
+表单验证策略模式例子：
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+	
+<script type="text/javascript">
+	//策略对象：
+	var strategies={
+		isNonEmpty:function(value,errorMsg){
+			if(value===""){
+				return errorMsg;
+			}
+		},
+		minLength:function(value,length,errorMsg){
+			if(value.length<length){
+				return errorMsg;
+			}
+		},
+		isMoblie:function(value,errorMsg){
+			if(!/(^1[3|5|8][0-9]$)/.test(value)){
+				return errorMsg;
+			}
+		}
+	}
+
+	//validatator类（表单验证类）
+	var Validator=function(){
+		this.cache=[];
+	}
+	Validator.prototype.add=function(dom,rules){
+	var self=this;
+	for(var i=0,rule;rule=rules[i++];){
+	(function(rule){
+	var strategyAry=rule.strategy.split(":");
+	var errrMsg=rule.errorMsg;
+	self.cache.push(function(){
+		var strategy=strategyAry.shift();
+		strategyAry.unshift(dom.value);
+		strategyAry.push(errorMsg);
+		return strategies[strategy].apply(dom,strategyAry);
+				})
+			})(rule)
+		}
+	}
+	Validator.prototype.start=function(){
+	for(var i=0,validatorFunc;validatorFunc=this.cache[i++];){
+			var errorMsg=validatorFunc();
+			if(errorMsg){
+				return errorMsg;
+			}
+		}
+	}
+	//用户调用代码
+	window.onload=function(){
+		var registerForm=document.getElementById("registerForm");
+		var userName=document.getElementById("userName");
+		var password=document.getElementById("password");
+		var phoneNumber=document.getElementById("phoneNumber");
+		var validataFunc=function(){
+			var validator=new Validator();
+			validator.add(userName,[{
+				strategy:'isNonEmpty',
+				errorMsg:'用户名不能为空'
+			},
+			{
+				strategy:'minLength:6',
+				errorMsg:'用户名不能小于6位'
+			}])
+			validator.add(password,[{
+				strategy:'minLength:6',
+				errorMsg:'密码长度不能少于6位'
+			}])
+			validator.add(phoneNumber,[{
+				strategy:'isMoblie',
+				errorMsg:'手机号格式不正确'
+			}])
+			var errorMsg=validator.start();
+			return errorMsg;
+		}
+
+		registerForm.onsubmit=function(){
+			var errorMsg=validataFunc();
+			if(errorMsg){
+				alert(errorMsg);
+				return false;
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+	<form action="123.asp" method="post" id="registerForm">
+		请输入用户名: <input type="text" id="userName"><br>
+		请输入密码:&nbsp;&nbsp;&nbsp;<input type="password" id="password"><br>
+		请输入手机号: <input type="text" id="phoneNumber"><br>
+		<button>提交</button>
+	</form>
+</body>
+</html>

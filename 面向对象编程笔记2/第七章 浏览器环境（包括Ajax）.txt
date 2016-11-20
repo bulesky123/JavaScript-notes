@@ -1,0 +1,136 @@
+1、dcoument.documentElement.clientWidth  ;//可视区的宽度
+   document.documentElement.clientHeight ;//可视区的高度
+
+
+2、document.documentElement.scrollTop(仅仅IE、Firefox支持)//滚动的距离
+   document.body.scrollTop (兼容chrome)    //滚动距离
+
+3、所有浏览器兼容写法：
+
+var scrollTop=document.documentElement.scrollTop || document.body.scrollTop
+
+
+4、事件对象：兼容写法 var  e=e || window.event 
+	innerText (IE支持)    contentText(其他浏览器)
+	兼容写法：对象.innerText=对象.contentText="字符串"
+
+5、clientX 与clientY  鼠标的横纵坐标  
+
+  例如：e.clientX     e.clientY  获取鼠标的横纵坐标
+
+6、keyCode  获取用户按下键盘的那个按键
+
+
+7、事件冒泡(阻止冒泡)：e.cancelBubble=true;
+
+
+8、阻止默认行为：   return false
+
+
+9、兼容性：
+
+事件             标准浏览器                            IE
+
+阻止冒泡         stopPropagation（）         cancelBubble=true
+阻止默认行为     preventDefault()             returnValue=false
+取消监听事件     removeEventListenter()       detachEvent()
+
+阻止冒泡兼容写法：
+	var e=e|| window.event
+	if(e.stopPropagation){
+		e.stopPropagation();
+	}else{
+		e.cancelBubble=true;
+	}
+
+阻止默认行为兼容写法：
+   var e=e || window.event
+   if(e){
+	e.preventDefault();
+  }
+   if(event){
+	event.returnValue=false;
+  }
+
+
+10、事件监听兼容版本：
+function addEvent(Ele,Type,fun){
+	if(Ele.addEventListenner){//兼容除IE外的标准浏览器
+		Ele.addEventListenner(Type,fun,false);
+	}else if(Ele.attachEvent){//兼容IE
+		Ele.attachEvent("on"+Type,fun);
+	}else{//兼容其他不支持监听的浏览器
+		Ele["on"+Type]=fun;
+	}
+}
+
+11、xmlHttpRequest
+
+ function Ajax(){
+	//1、创建ajax对象存储到xmlHttp中
+	this.xmlHttp=null;
+	
+	if(window.XMLHttpRequest){
+	  
+	this.xmlHttp=new XMLHttpRequest();
+	
+	}else if(window.ActiveXObject){
+		  
+	this.xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+}
+	//2、创建自己的open方法
+	Ajax.prototype.ajaxOpen=function(method,target){
+		  
+		this.xmlHttp.open(method,target,true);
+		  
+	}
+	
+	//3、创建自己的设置头部信息编码方法
+		  	
+	Ajax.prototype.ajaxSetHeader=function(){
+		  		
+		this.xmlHttp.setRequestHeade("Content-type","application/x-www-form-urlencoded");
+	
+	}
+	//4、创建自己的绑定readyState事件的方法，注意参数是一个函数
+		  	
+	Ajax.prototype.bindReadyState=function(fun){
+		  						this.xmlHttp.onreadystatechange=fun;
+		  
+	}
+	//5、创建自己的send方法
+		  	
+	Ajax.prototype.ajaxSend=function(post_data){
+		  		
+		this.xmlHttp.send(post_data);
+		  	
+	}
+
+12、第二种方式：
+
+function xmlHttp(url,fusuccess,fuerror){
+	//1、定义Ajax对象
+	if(window.xmlHttpRquest){
+		var Ajax=new xmlHttpRquest();
+	}else{
+		var Ajax=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	//2、链接服务器open(方法，文件名，传输方式)
+	Ajax.open("GET",url,true);
+	//3、创建自己的设置头部信息编码方法
+	Ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	//4、发送请求
+	Ajax.send(post_data);
+	//5、接收返回
+	Ajax.onreadystatechange=function(){
+		if(Ajax.readyState==4&&Ajax.status==200){
+			fusuccess(Ajax.responseText);
+		}else{
+			if(fuerror){
+				fuerror(Ajax.status);
+			}
+		}
+	}
+}
+

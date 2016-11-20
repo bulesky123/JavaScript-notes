@@ -1,0 +1,55 @@
+1、Javascript的组成
+     ——ECMAscript解释器
+     ——BOM（浏览器对象模型）   ——完全不兼容（各个浏览不一样）
+     ——DOM（文档对象模型）     ——有些不兼容
+
+Window对象包含属性：document、location、navigator、screen、history、frames 
+
+Document根节点包含子节点：forms、location、anchors、images、links
+
+
+2、window对象（全局对象）
+     ——所有的全局变量实上是window对象的属性
+     ——所有的Javascript核心函数（ParseFloat()、alert()、
+Array()、Date()等等）都是window对象的方法。
+     ——属于浏览器的顶级对象
+
+3、window.navigator 用于反映浏览器本身及其功能信息的对象
+     ——navigator.userAgent
+
+4、window.location  用于储存当前载入页面URL信息的对象。
+      ——location.href   显示的是完整的URL
+      ——location.hostname   只显示相关的域名
+
+5、window.history    允许我们在同一个浏览器会话中储存有限数量的访问记录
+     ——history.length
+     ——history.forward()  前进
+     ——history.back()     后退
+     ——history.go(2)      去那个页面（可以为负值）
+
+
+6、window.frames      当前页面中所有frame的元素集合（不区分iframe与frame）
+
+     ——window.frame===window （window.frame属性是总是存在的，并指向window本身）
+
+
+7、window.screen     浏览器以外的桌面信息
+     ——window.screen.colorDepth    当前显示器的色位（颜色质量）
+     ——window.screen.width         总分辨率
+     ——window.screen.avilWidth     出去操作系统菜单（任务栏）以外的子区域
+
+8、window.open()/close()
+     ——window.open("URL",name,功能列表)
+     ——window.close()   关闭新窗口的
+
+9、window.moveTo()/window.resizeTo()
+     ——window.moveTo(100,100)   移动到x=100,y=100
+     ——window.moveBy(10,-10)    具体移动多少
+     ——window.resizeTo(x,y)     调整窗口大小
+
+10、window.alert()/window.prompt()/window.confirm()
+
+11、window.setTimeout()   window.setInterval()
+    clearTimeout()        clearInterval()
+
+12、window.document   是一个BOW对象，表示当前载入的文档（页面）但它的方法和属性同时也属于DOM对象所涵盖的内容。

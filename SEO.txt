@@ -1,0 +1,75 @@
+前段工程师与SEO
+3栋1单元202
+网站结构布局优化：扁平化结构
+——控制首页连接数量（100个以内）
+——扁平化的目录层次
+——导航SEO优化
+——面包屑导航
+
+网站优化（YAHOO军规）：
+——尽量减少HTTP请求数（图片合并，js和css合并）
+
+——使用CDN（内容分发网络）（就是在离你最近的地方，放置一台性能好连接顺畅的副本服务器，让你能够以最近的距离，最快的速度获取内容）
+——添加Expire/Cache-Control头（）
+
+——启用Gzip压缩（也就是在服务器压缩）（HTML PHP JS CSS XML TXT）（体积变小）
+
+——将CSS放在页面最上面（避免页面出现空白或者未有样式的，提前加载CSS）
+
+——将script放在页面最下面（）
+
+——避免在CSS中使用Expressions（css表达式）
+
+——把Javascript和CSS都放在外部文件中（优点：提高了JS和CSS的复用性、减少页面体积、提高了JS和CSS的可维护性。缺点：未减少页面请求数、不能提高页面渲染速度）
+
+——减少DNS查询（一般20ms）（多域、单域）
+
+——最小化Javascript和CSS（代码格式化，压缩）
+
+——避免重定向（原始请求被重新转向到了其他请求（增加了HTTP请求））
+301：用户请求的页面被移动到了另外的位置
+302：用户请求的页面被找到了，但不在原始的位置
+
+——移除重复的脚本（）
+
+——配置实体标签（ETag:实体标签）
+
+——使用Ajax缓存
+
+POST：每次都执行，不被缓存
+
+GET：同一地址不在重复执行，可以缓存
+
+
+YSlow工具（插件）
+
+
+
+Statics:统计信息视图，与components相似
+Empty Cache 空缓存（第一次打开的时候）
+
+Primed Cache：缓存后（再次打开的时候）
+
+Tools工具：
+
+JSLink 检查Javascript的正确性
+AllJS  展示页面中一共使用了多少JS文件
+All JS Beautified 将一些压缩什么的JS美化，以可读的方式展示
+All JS Minified  删除换行，空格，压缩JS
+All CSS 展示页面中的所有CSS
+YUI CSS Compressor  压缩CSS
+All Smush.it?	    图片在线优化的功能
+Printable View	    将分析打印成报告
+
+
+注意在控制台里有：
+console.log() 
+console.info()
+console.debug()
+console.error()
+
+
+
+
+
+

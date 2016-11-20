@@ -1,0 +1,170 @@
+1、原型链继承：TwoDshape.prototype=new shape()
+              Triangle.prototype=new TwoDshape()
+
+注意：当我们对对象的prototype属性进行完重写时，有可能会对对象的constructor属性产生一定的负面影响，所以我们最好对这些对象的constructor属性进行相应的重置。
+
+            TwoDshape.prototype.constructor=TwoDshpae()
+            Triangle.prototype.constructor=Triangle();
+
+执行的步骤：通过__proto__原型链一级一级的向上找，直到找到
+
+2、将构造器函数的共享属性迁移到原型中去：
+
+  实现共享：如果没有在原型上，则在每次实例化的时候都会重新创建一个新的属性或者方法（虽然名字可能是一样的）这样效率会更高
+
+
+例如：       TwoDshape.prototype.name="name"
+
+注意：我们通常在对原型对象进行扩展之间，先完成相关的继承关系构建，否则TwoDshape.prototype中的后续新内容有可能会抹掉我们所继承的东西。
+
+3、只继承与原型：     child.prototype=parent.prototype
+
+注意：由于该模式在构建继承关系时不需要新建对象实例，效率会有较好的表现，原型链上的查询会比较快，缺点：对子对象的修改会影响父对象
+
+4、临时构造器法：
+
+	function extend(child,parent)
+         {
+		var F=function(){};
+            	F.prototype=parent.prototype;
+     		child.prototype=new F();
+   		child.prototype.constructor=child;
+   		child.uber=parent.prototype;
+
+          }
+
+
+注意：该模式只继承父对象原型上的属性，而对于其自身的属性（也就是被构造器函数添加到this值中的属性）则不予继承。
+
+5、原型属性拷贝：
+
+	function extend2(child,parent)
+ 	 {
+	 	var p=parent.prototype;
+   		var c=child.prototype;
+  		for(var i in p)
+         	 {
+    			c[i]=p[i];
+		 }
+ 		c.uber=p;
+   	  }
+
+注意：将父对象原型中的内容全部转化为子对象自身原型属性，不需要再单独的创建对象实例。
+
+6、小心处理引用拷贝：
+
+    注意：就是使用extend()和extend2()方法来继承的时候，当我们用另一个对象对子对象某个属性或方法完全重写时（不是修改现有属性）父对象的该属性或方法还会继续引用原对象的首地址。
+
+
+7、全属性拷贝（浅拷贝）：
+     		function extendcopy(p)
+    		{
+			var c={};
+ 			for(var i in p)
+ 		    {
+			c[i]=p[i];
+  		     }
+			c.uber=p;
+     			return c;
+  		}
+
+注意：基于对象工作模式，属性拷贝模式
+
+8、深拷贝（修改子对象后父对象不会改变）：
+
+    		function deepcopy(p,c)
+		{
+			var c=c||{};
+			for(var i in p)
+			{
+			    if(typeof p[i]==="object")
+			    {
+		      c[i]=(p[i].constructor===Array) ? []:{};
+			     }else{
+				c[i]=p[i];
+				}
+			}
+		     return c;
+		}
+
+
+注意：基于对象工作模式，属性拷贝模式(jQuery新版本在 用)
+
+9、object()
+
+		function object(o)
+   		{
+			function F(){};
+			F.prototype=o;
+			n=new f();
+			n.uber=o;
+			return n;
+		}
+
+
+10、原型继承与属性拷贝的混合应用：
+
+		function objectPlus(o,stuff)
+		{
+			var n;
+			function F(){};
+			F.prototype=o;
+			n=new F();
+			n.uber=o;
+			for(var i in stuff)
+			{
+				n[i]=stuff[i]
+			}
+			return n;
+		}
+注意：对象o用于继承，对象stuff则用于拷贝方法与属性
+
+
+11、多重继承（一个对象中有不止一个父对象的继承模式）
+
+		function multi()
+		{
+		   var n={},stuff,j=0,len=arguments.length;
+		   for(j=0;j<len;j++)
+		   {
+			stuff=arguments[j];
+			for(var i in stuff)
+			{
+				n[i]=stuff[i];
+			}
+		    }
+		   return n; 
+		}
+
+注意：按照父对象的出现顺序依次对他们执行属性的全拷贝。
+
+12、寄生继承法：
+     		function parasite(victim)
+		{
+			var that=object(victim);
+			that.more=1;
+			return that;
+		}
+
+注意：该方法通过一个类似构造器的函数来创建对象。该函数会执行相应的对象拷贝，并对其进行扩展，然后返回拷贝
+
+13、构造器借用法：（只继承父对象的自身属性）
+
+		function child（）
+		{
+			parent.apply(this,arguments);
+		}
+
+注意：如果是还想继承原型的属性则可以加入：
+     child.prototype=new parent()  但是这样造成重复两次调用父对象的构造器。
+     属性继承用apply()  call()
+
+14、借用构造器与属性拷贝法结合（解决13重复的问题）
+ 
+     		function child()
+		{
+			parent.apply(this,arguments);
+		}
+		extend2(child,parent);
+
+注意：这样就可不重复调用构造器的情况下同时继承其自身属性和原型属性

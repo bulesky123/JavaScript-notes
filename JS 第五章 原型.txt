@@ -1,0 +1,96 @@
+第五章：原型：
+1、每个作为构造函数的函数都有一个prototype属性，该属性所存储的就是原型对象。
+
+  typeof Array.prototype
+
+
+//"object"   也就是说 prototype本身就是一个原型对象
+
+2、函数本身就是一个对象：包含属性和方法。例如：apply()、call()方法，length、constructor、prototype属性（这些属性都是在函数定义的时候就创建了）
+
+3、constructor属性：返回创建此对象的构造函数。
+   比如说：var arr=new Array() 那么arr.constructor就会返回创建     它的构造函数：//Array()
+
+每个函数都有属于它自己的构造器属性constructor，其引用的就是用于创建该对象的那个函数  prototype也是一个对象那么它也有自己的constructor属性，注意： 如果这样一直循环下去最后就是Object内建对象
+
+例如：function foo(a,b){
+             return a*b
+           }
+
+
+         
+         //foo.constructor
+
+        
+         //function Function() { [native code] }
+
+           
+          var e=new foo();
+
+            
+           e.constructor
+
+          
+           //function foo(a,b){return a*b}
+
+3、length属性：返回函数的参数个数
+
+4、toString() 和valueOf() 方法：这两个方法返回的都是函数的源代码，在调试时尤其有用。
+
+例如：
+ function doAdd(iNum) {
+  
+          alert(iNum + 10);
+
+     }
+
+    doAdd.toString()
+
+
+      // "function doAdd(iNum) {
+  alert(iNum + 10);
+}"
+
+
+    doAdd.valueOf()
+
+ 
+   // function doAdd(iNum) {
+  alert(iNum + 10);
+}
+
+5、属性prototype是在函数作为构造函数时使用的。它引用的是作为整个对象类的原型的对象。由这个构造函数创建的任何对象都会继承属性prototype引用的对象的所有属性。
+
+6、每个对象都有一个prototype属性，并且是在该对象定义的时候，系统就把prototype创建好了，prototype它其实就是一个原型对象，我们在原型上添加属性和方法 实质上就是在为一个对象添加属性和方法，只不过在原型上添加 会使new出来的新对象也有继承了这些属性和方法
+
+
+7、原型的工作原理：在访问某个对象的属性或方法的时候，JS引擎会先去遍历该对象的自身属性或方法，如果没有找到，再去查看用于创建当前对象的构造器函数的原型（等价于我们直接访问该
+           对象.constructor.prototype）
+
+8、自身属性的优先级高于原型属性。
+
+9、可枚举属性：用for-in循环可以显示出来的属性，其中length、constructor属性属于不可枚举的。
+  
+   propertyIsEnumerable()可以判断哪些是可枚举的，即所有原型属性都会返回false，包括在for-in循环中可枚举的，所有非内建对象属性返回true
+
+   hasOwnProperty()方法，判断是自身属性还是原型属性，自
+身属性返回true
+
+10、isPrototypeOf()方法：判断当前对象是否是另一个对象的原型
+
+11、__proto__属性：实际上就是新new 出来的对象的一个属性（某个实体对象的属性），它指向的是相关原型的链接（在IE中没有此属性），而prototype是属于构造器函数
+的属性
+
+var monkey={
+	feeds:'bananas',
+	breaths:'air',
+ };
+ 	function Human(){};
+	Human.prototype=monkey;
+	var a=new Human();
+	console.log(a.__proto__);
+// Object {feeds: "bananas", breaths: "air"}
+
+12、当我们重写某个对象的prototype时，重置相应的constructor属性
+
+例如：monkey.prototype.constructor=monkey

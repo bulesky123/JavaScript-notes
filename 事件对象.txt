@@ -1,0 +1,72 @@
+1、事件驱动： 1）在某个对象绑定了某个事件
+             2）发生了这个事件
+             3）系统自动调用了这个事件
+
+
+2、事件绑定：1）行内绑定
+            2）对象名.事件名=function(){}
+            3)事件监听 对象名.addEventLisenter("事件名","函数名","事件捕获false/true")
+
+
+3、为什么要用事件监听：如果没有用，一个对象只能绑定一个事件，然而事件监听可以为一个对象绑定多个事件
+
+模板王  懒人图库  下载特效
+
+4、捕获法：事件先发生在document上，后依次向外层传递
+   冒泡法：有外向里传递，最后到document上
+
+5、stopPropagation()方法——阻止冒泡
+   setCapture()和releaseCapture()方法——仅IE使用
+
+6、removeEventListenter() ——移除监听器参数addEventListenter相同
+
+注意：匿名函数所定义的监听器是不能被移除的。
+
+7、防止默认行为：preventDefault()需要加在相关事件上
+
+8、事件监听：（兼容版本）
+
+function addEvent(Element,type,handler){
+	if(Element.addEventListener){//兼容标准浏览器
+		Element.addEventListener(type,handler,false);
+	}
+	else if(Element.attachEvent){//兼容IE
+		Element.attachEvent("on"+type,handler)
+	}else{//兼容其他不支持监听的浏览器
+		Element["on"+type]=handler;
+	}
+}
+
+9、兼容性：
+
+事件             标准浏览器                            IE
+
+阻止冒泡         stopPropagation（）          cancelBubble=true
+阻止默认行为     preventDefault()             returnValue=false
+取消监听事件     removeEventListenter()       detachEvent()
+
+10、XMLHttpRequest对象
+  ——发送请求;
+
+function xmlHttp(url,fusuccess,fuerror){
+	//1、定义Ajax对象
+	if(window.xmlHttpRquest){
+		var Ajax=new xmlHttpRquest();
+	}else{
+		var Ajax=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	//2、链接服务器open(方法，文件名，传输方式)
+	Ajax.open("GET",url,true);
+	//3、发送请求
+	Ajax.send();
+	//4、接收返回
+	Ajax.onreadystatechange=function(){
+		if(Ajax.readyState==4&&Ajax.status==200){
+			fusuccess(Ajax.responseText);
+		}else{
+			if(fuerror){
+				fuerror(Ajax.status);
+			}
+		}
+	}
+}

@@ -1,0 +1,61 @@
+1、function Hero(name){
+	this.name=name;
+	this.occupation="Ninja";
+	this.whoYouAre=function(){
+	return "I'm"+this.name+"and I'm a"+this.occupation;
+	}
+}
+	var h=Hero("Leonardo");
+	typeof h;  //undefined
+
+2、由于此处没有用new操作符，因此这就是一般的函数调用，h值应该是该函数的返回值，然而该函数没有返回值，则就为undefined，此时便赋值给了h   注意：如果没有用new操作符，那么this的指向是全局对象window
+
+3、如果是普通函数的调用，this的指向统统是window
+
+4、构造器属性：constructor属性：实际上就是一个指向用于创建该对象的构造器函数的引用。
+
+5、：创建一个新的构造器函数除了用new操作符以外，还可以用一个数让它的返回值为一个对象，也可以
+
+6、若果构造器函数返回的是一个对象，那么此时的this就不是指向该构造器了，而是返回的那个对象。
+例子：function c(){
+	this.a=1;
+	return {b:2};
+    }
+    var aa=new c();
+    typeof aa.a   //undefined
+     aa.b        //2
+
+7、对象的比较，如果两个对象要相等，当且仅当它们两个的首地址相同的时候才相等，尽管有时他们偶然的拥有相同的属性和方法（但是它们的引用是不同的）
+
+8、内建对象可以分为三类（实际上都是Object()构造器函数）：
+——数据封装类对象：Object、Array、Boolean、Number、String
+——工具类对象：Math、Date、RegExp
+——错误类对象：
+
+9、Object是JS中的父对象，注意：即使是空对象它都含有一些属性和方法（属性：constructor）（方法：toString()、valueof()）
+
+
+10、Function对象中含有一个ECMA标准之外的属性；caller属性：
+——作用：返回一个调用该函数对象的外层函数引用。也就是在说，如果是在B()函数中调用了A()的，那么在A()中调用A.caller结果就会返回函数B()（注意：如果实在全局里调用的则返回null）
+
+11、prototype属性：
+    ——每个函数的prototype属性，都是一个对象即：a.prototype是一个对象。
+    ——如果一个对象被当作构造器函数来创建新的函数，那么新对象obj就会有对F.prototype属性的访问权（注意：F.prototype本就是一个函数）
+
+12、call和apply 用于改变this的指向，一般用于继承属性，区别在与apply的第二参数是一个数组的形式，call(obj,参数,参数......)
+                                apply(obj,[参数,参数...])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

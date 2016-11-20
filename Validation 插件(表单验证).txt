@@ -1,0 +1,254 @@
+jQuery validate插件：
+1）让客户端表单验证变得非常容易，并且提供了很多的配置项目
+2）插件还附带了很多验证方法，并实现了国际化，可以配置多种语言的提示信息。
+
+使用方法：引入 ：
+<script src="jquery.js"></script>
+<script src="jquery.validate.js"></script>
+
+
+
+登录表单：
+<script src="jquery.js"></script>
+<script src="jquery.validate.js"></script>
+<script>
+	$(function(){
+	$("demoForm").validate({
+			rules:{//规则
+//这里的userName是表单里的Name，不是id值，下面的password也一样
+			   username:{
+			        require:true,
+				minlength:2,
+				maclength:10
+				},
+			   password:{
+				require:true,
+				minlength:2,
+				maxlength:16
+				}
+			},
+			messages:{//提示信息
+			    username:{
+			        require:"必须填写用户名",
+				minlength:"用户名最小为2位",
+				maclength:"用户名最大为10位"
+				},
+			     password:{
+				require:"必须填写密码",
+				minlength:"密码最小为2位",
+				maxlength:"密码最大为16位"
+				}
+			}
+		})
+	})
+</script>
+
+
+基本API：
+两个重要的概念：
+1）method：验证方法，指的是校验的逻辑。
+比如：Email方法，检查输入的文本是否符合Email规则
+
+2）rule:验证规则，指的是元素和验证方法的关联。
+比如：页面一个id为Email的文本框，需要带有Email的验证规则方法
+
+
+
+
+
+validate()方法：
+设置：debug：true——>表单不提交
+
+require :必填
+
+remote  :远程校验
+例如： remove:{
+	  url:"remote.json",  //远程校验的地址
+	  type:"post",        //方式
+	  data:{
+	      loginTime:function(){
+	           return+new Date;
+		}
+	      }
+	}
+
+
+minlength: 最小长度（长度的范围）
+
+maxlength: 最大长度（长度的范围）
+
+rangelength: 长度范围
+       例如：不用最大值和最小值
+              rangelenght:[2,10]
+     
+
+min:最小值 (值的范围)
+
+max:最大值 (值的范围)
+
+range:值得范围
+
+email: Email格式   例如：email:true,
+
+url : URL格式      例如：url:true,
+
+date :日期         例如：date:true,
+
+dateISO :ISO日期 例如：dateISO:true, 标准日期格式：yyyy/mm/dd
+
+number: 数字       例如：number：true,
+
+digits :整数       例如：digits:true,  必须为非负整数
+
+equalTo :与另一个元素值相等   例如：确认密码的时候
+例如：rules:{
+	password:{
+		require:true,
+		minlength:2,
+		maxlength:16
+		},
+	"confirm-password":{//与password是同一级的
+		   equalTo:"#password"
+	       }
+	}
+
+
+
+
+
+
+高级API: 
+
+A、 valid()方法：
+
+
+1）检查表单或某些元素是否有效
+ 用法：$("#check").clcik(function(){
+	alert($(#demoForm).valid() ? "填写正确":"填写错误");
+	})
+
+
+
+B、rules()方法 (注意：针对的是具体的一个表单元素，不是整体表单)
+
+
+1)rules()   (未加参数)获取表单元素的校验规则
+2)rules("add",rules)  向表单元素增加校验规则
+3)rules("remove",rules) 删除表单元素校验规则
+
+
+Validator对象
+
+1)validate方法返回validator对象，Validator对象有很多有用的方法
+
+2）Validator.form()验证表单是否有效，放回true/false
+
+3）Validator.element(element)验证某个元素是否有效，返回true/false
+
+4)Validator.resetForm()  把表单恢复到验证前的原来状态
+
+5）Validator.showErrors(errors) 针对某个元素显示特定的错误信息
+
+6）Validator.numberOfInvalids() 返回无效元素数量
+
+注意：var Validator=$("#demoForm").validate()  这样就捕获了Validator对象
+
+
+
+
+
+
+validator 对象的静态方法（不用捕获Validator对象,直接用）
+
+1)$.Validator.addMethod(name,method[,message])增加自定义验证方法
+
+2）$.Validator.format(template,argument,argumentN...)格式化字符串，用参数代替模板中的{n}
+
+3）$.Validator.setDefaultts(option) 修改插件默认值设置
+
+4) $.validator.addClassRules(name,rules)为某些包含Name的class增加组合验证类型
+
+
+
+
+
+Validate()方法配置项
+
+1)submitHandler  通过验证后运行的函数，可以加上表单提交方法
+		例如：submitHandler:function(form){
+			form.submit();
+			}
+
+2)invalidHandler 无效表单提交后运行的函数
+	例如：invalidHandler:function(event,validator){
+			console.log()
+			}
+
+3)ignore         对某些元素不进行验证
+		例如：ignore:"#username"  值为一个选择器
+
+
+4)rules          定义校验规则
+	username:{
+		 require:{
+			depends:function(element){代码}
+		//当满足depends里代码条件时才进行校验
+			  },
+		 minlength:2,
+		 maclength:10
+				
+		}
+
+5)messages       定义提示信息
+
+6)groups         对一组元素的验证，用一个错误提示，用errorPlacement的控制把出错信息放在哪里
+
+7)onsubmit    是否在提交时验证
+
+8)onfocusout  是否在获取焦点时验证
+
+9)onkeyup     是否在敲击键盘时验证
+
+10)onclick    是否在鼠标点击时验证，一般用于checkbox或者radio
+
+11)focusInvalid  提交表单后，未通过验证的表单（第一个或提交之前获得焦点的未通过验证的表单）是否会获得焦点
+
+12)fousCleanup   当未通过验证的元素获得焦点时，是否移除错误提示
+
+13)showErrors   可以显示总共有多少未通过验证的元素
+
+14)errorPlacement  自定义错误放到哪里
+
+15)succss  要验证的元素通过验证后的动作
+
+16)highlight   可以给未通过验证的元素加效果
+
+17)unhhighlight  去除为未通过验证的元素的效果，一般和highlight同时使用
+
+18)
+
+
+自定义验证方法：
+
+$.validator.addMethod(name,method,[,messages])
+
+参数详解：
+Name：方法名称
+
+method:function(value,element,parament) 方法逻辑
+
+messages: 提示消息
+
+
+additional-methods.js  包含了很多扩展验证方法
+
+
+
+
+选择器扩展
+
+1）：blank    选择所有值为空的元素
+
+2) :filled    选择所有值不为空的元素
+
+3）:unchecked  选择所有没有被选中的元素

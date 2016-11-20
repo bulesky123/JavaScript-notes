@@ -1,0 +1,55 @@
+1、命令模式：用来对方法调用进行参数化处理和传送，经过这样的处理过的方法调用可以在任何需要的时候执行。也就是说该模式旨在将函数的调用、请求和操作封装成一个单一的对象，然后对这个对象进行一系列的处理。它也可以用来消除调用操作的对象和实现的对象之间的耦合。这位各种具体的类的更换带来了极大的灵活性。
+
+2、模式的作用：
+——将函数的封装、请求、调用结合在一起
+
+——调用具体的函数解耦命令对象与接收对象
+
+——提高程序模块化的灵活性
+
+注意事项：
+——不需要接口一致，直接调用函数即可，一面造成浪费。
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script type="text/javascript">
+	window.onload=function(){
+	var time=0;
+	var button=document.getElementById("button");
+	function setCommand(button,command){//命令的发送者
+		button.onclick=function(){
+			time++;
+			command.execute();
+		}
+	}
+
+	var MenuBar={//命令的具体内容
+		refresh:function(){
+			console.log("页面菜单刷新"+time+"次");
+		}
+	}
+
+	function RefreshBarCommand(receiver){//命令的接受者
+		return {
+			execute:function(){
+														receiver.refresh();
+				}
+			}
+		}
+	var refreshMenuBar=new RefreshBarCommand(MenuBar);
+	setCommand(button,refreshMenuBar);
+
+}
+</script>
+</head>
+<body>
+<button type="button" id="button">刷新菜单页面</button>
+</body>
+</html>
+
